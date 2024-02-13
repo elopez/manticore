@@ -75,9 +75,8 @@ setup(
         "ply",
         "rlp",
         "intervaltree",
-        "crytic-compile>=0.2.2",
+        "crytic-compile>=0.2.2,<0.3.0",
         "wasm",
-        "dataclasses; python_version < '3.7'",
         "pyevmasm>=0.2.3",
     ]
     + rtd_dependent_deps(),
