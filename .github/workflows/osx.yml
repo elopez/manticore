@@ -1,6 +1,10 @@
 name: MacOS Tests
 
 on:
+  push:
+    branches:
+      - master
+  pull_request:
   schedule:
     # Run every day at 11 PM.
     - cron:  '0 23 * * *'
