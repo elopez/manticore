@@ -3,7 +3,7 @@ import logging
 import uuid
 
 import re
-import sha3
+from Crypto.Hash import keccak
 
 from . import abitypes
 from ..core.smtlib import (
@@ -198,7 +198,7 @@ class ABI:
         """
         Makes a function hash id from a method signature
         """
-        s = sha3.keccak_256()
+        s = keccak.new(digest_bits=256)
         s.update(method_name_and_signature.encode())
         return bytes(s.digest()[:4])
 
