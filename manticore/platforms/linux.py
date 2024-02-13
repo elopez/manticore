@@ -3074,7 +3074,7 @@ class Linux(Platform):
     def sys_clock_gettime(self, clock_id, timespec):
         logger.warning("sys_clock_time not really implemented")
         if clock_id == 1:
-            t = int(time.monotonic() * 1000000000)  # switch to monotonic_ns in py3.7
+            t = int(time.monotonic_ns())
             self.current.write_bytes(
                 timespec, struct.pack("L", t // 1000000000) + struct.pack("L", t)
             )

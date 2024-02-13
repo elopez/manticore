@@ -34,7 +34,7 @@ setup(
     name="manticore_server",
     version="0.0.1",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=[
         f"manticore[native] @ file://{Path(__file__).parent.resolve()}/..",
         f"protobuf~={PB_VER}",
