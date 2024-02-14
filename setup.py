@@ -22,7 +22,7 @@ native_deps = [
     "unicorn~=2.0",
 ]
 
-lint_deps = ["black~=22.0", "mypy==0.790"]
+lint_deps = ["black~=22.0", "mypy==1.8.0"]
 
 auto_test_deps = ["py-evm"]
 

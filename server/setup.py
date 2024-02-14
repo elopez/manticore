@@ -50,7 +50,7 @@ setup(
             "types-setuptools",
             "black~=22.0",
             "isort==5.10.1",
-            "mypy==0.942",
+            "mypy==1.8.0",
         ]
     },
     entry_points={
