@@ -48,8 +48,8 @@ class ManticoreServerCoreNativeTest(unittest.TestCase):
     def test_start_with_no_or_invalid_binary_path(self):
         self.servicer.StartNative(NativeArguments(), self.context)
 
-        self.assertEquals(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
-        self.assertEquals(self.context.details, "Basic arguments are invalid!")
+        self.assertEqual(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(self.context.details, "Basic arguments are invalid!")
 
         self.context.reset()
 
@@ -61,8 +61,8 @@ class ManticoreServerCoreNativeTest(unittest.TestCase):
             NativeArguments(program_path=invalid_binary_path), self.context
         )
 
-        self.assertEquals(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
-        self.assertEquals(self.context.details, "Basic arguments are invalid!")
+        self.assertEqual(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(self.context.details, "Basic arguments are invalid!")
 
     def test_start(self):
         mcore_instance = self.servicer.StartNative(
@@ -182,8 +182,8 @@ class ManticoreServerCoreNativeTest(unittest.TestCase):
             self.context,
         )
 
-        self.assertEquals(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
-        self.assertEquals(self.context.details, "Hooks set are invalid!")
+        self.assertEqual(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(self.context.details, "Hooks set are invalid!")
 
         self.context.reset()
 
@@ -200,8 +200,8 @@ class ManticoreServerCoreNativeTest(unittest.TestCase):
             self.context,
         )
 
-        self.assertEquals(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
-        self.assertEquals(self.context.details, "Hooks set are invalid!")
+        self.assertEqual(self.context.code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(self.context.details, "Hooks set are invalid!")
 
     def test_terminate_running_manticore(self):
         mcore_instance = self.servicer.StartNative(
@@ -247,7 +247,7 @@ class ManticoreServerCoreNativeTest(unittest.TestCase):
 
         t_status = self.servicer.Terminate(mcore_instance, self.context)
 
-        self.assertEquals(self.context.code, grpc.StatusCode.OK)
+        self.assertEqual(self.context.code, grpc.StatusCode.OK)
 
     def test_terminate_invalid_manticore(self):
         t_status = self.servicer.Terminate(
