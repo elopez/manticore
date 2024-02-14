@@ -76,7 +76,7 @@ setup(
         "rlp",
         "intervaltree",
         "crytic-compile>=0.2.2,<0.3.0",
-        "wasm",
+        "wasm-tob",
         "pyevmasm>=0.2.3",
     ]
     + rtd_dependent_deps(),
