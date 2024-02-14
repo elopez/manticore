@@ -6,7 +6,7 @@ import re
 import sys
 import argparse
 import logging
-import pkg_resources
+from importlib.metadata import version
 from itertools import chain
 from manticore.ethereum import ManticoreEVM
 from manticore.ethereum.detectors import DetectIntegerOverflow
@@ -383,7 +383,7 @@ def main():
         help=("A folder name for temporaries and results." "(default mcore_?????)"),
     )
 
-    current_version = pkg_resources.get_distribution("manticore").version
+    current_version = version("manticore")
     parser.add_argument(
         "--version",
         action="version",

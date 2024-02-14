@@ -1,8 +1,8 @@
 import binascii
 import unittest
 import subprocess
-import pkg_resources
 from contextlib import contextmanager
+from importlib.metadata import version
 from pathlib import Path
 
 import os
@@ -95,7 +95,7 @@ class EthVerifierIntegrationTest(unittest.TestCase):
         cli_version = cli_version.split(
             "Manticore is only supported on Linux. Proceed at your own risk!\n"
         )[-1]
-        py_version = f"Manticore {pkg_resources.get_distribution('manticore').version}\n"
+        py_version = f"Manticore {version('manticore')}\n"
         self.assertEqual(cli_version, py_version)
 
 

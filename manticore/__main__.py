@@ -4,8 +4,7 @@ This is the Manticore's CLI `manticore` script.
 import argparse
 import logging
 import sys
-
-import pkg_resources
+from importlib.metadata import version
 
 from crytic_compile import is_supported, cryticparser
 from .core.manticore import ManticoreBase, set_verbosity
@@ -102,7 +101,7 @@ def parse_arguments() -> argparse.Namespace:
         help=("A folder name for temporaries and results." "(default mcore_?????)"),
     )
 
-    current_version = pkg_resources.get_distribution("manticore").version
+    current_version = version("manticore")
     parser.add_argument(
         "--version",
         action="version",
