@@ -276,48 +276,52 @@ class ManticoreEVM(ManticoreBase):
                 )
 
             for compilation_unit in crytic_compile.compilation_units.values():
+                for source_unit in compilation_unit.source_units.values():
 
-                if not contract_name:
-                    if len(compilation_unit.contracts_names_without_libraries) > 1:
+                    if not contract_name:
+                        if len(source_unit.contracts_names_without_libraries) > 1:
+                            raise EthereumError(
+                                f"Solidity file must contain exactly one contract or you must select one. Contracts found: {', '.join(source_unit.contracts_names)}"
+                            )
+                        contract_name = list(source_unit.contracts_names_without_libraries)[0]
+
+                    if contract_name not in source_unit.contracts_names:
+                        # Contract may be present in a different source unit
+                        continue
+
+                    name = contract_name
+
+                    libs = source_unit.libraries_names(name)
+                    if libraries:
+                        libs = [l for l in libs if l not in libraries]
+                    if libs:
+                        raise DependencyError(libs)
+
+                    bytecode = bytes.fromhex(source_unit.bytecode_init(name, libraries))
+                    runtime = bytes.fromhex(source_unit.bytecode_runtime(name, libraries))
+                    srcmap = source_unit.srcmap_init(name)
+                    srcmap_runtime = source_unit.srcmap_runtime(name)
+                    hashes = source_unit.hashes(name)
+                    abi = source_unit.abi(name)
+
+                    filename = None
+                    for _fname, contracts in compilation_unit.filename_to_contracts.items():
+                        if name in contracts:
+                            filename = _fname.absolute
+                            break
+
+                    if filename is None:
                         raise EthereumError(
-                            f"Solidity file must contain exactly one contract or you must select one. Contracts found: {', '.join(compilation_unit.contracts_names)}"
+                            f"Could not find a contract named {name}. Contracts found: {', '.join(source_unit.contracts_names)}"
                         )
-                    contract_name = list(compilation_unit.contracts_names_without_libraries)[0]
 
-                if contract_name not in compilation_unit.contracts_names:
-                    raise ValueError(f"Specified contract not found: {contract_name}")
+                    with open(filename) as f:
+                        source_code = f.read()
 
-                name = contract_name
+                    return name, source_code, bytecode, runtime, srcmap, srcmap_runtime, hashes, abi
 
-                libs = compilation_unit.libraries_names(name)
-                if libraries:
-                    libs = [l for l in libs if l not in libraries]
-                if libs:
-                    raise DependencyError(libs)
-
-                bytecode = bytes.fromhex(compilation_unit.bytecode_init(name, libraries))
-                runtime = bytes.fromhex(compilation_unit.bytecode_runtime(name, libraries))
-                srcmap = compilation_unit.srcmap_init(name)
-                srcmap_runtime = compilation_unit.srcmap_runtime(name)
-                hashes = compilation_unit.hashes(name)
-                abi = compilation_unit.abi(name)
-
-                filename = None
-                for _fname, contracts in compilation_unit.filename_to_contracts.items():
-                    if name in contracts:
-                        filename = _fname.absolute
-                        break
-
-                if filename is None:
-                    raise EthereumError(
-                        f"Could not find a contract named {name}. Contracts found: {', '.join(compilation_unit.contracts_names)}"
-                    )
-
-                with open(filename) as f:
-                    source_code = f.read()
-
-                return name, source_code, bytecode, runtime, srcmap, srcmap_runtime, hashes, abi
-
+                # contract was not found in any of the source units
+                raise ValueError(f"Specified contract not found: {contract_name}")
         except InvalidCompilation as e:
             raise EthereumError(
                 f"Errors : {e}\n. Solidity failed to generate bytecode for your contract. Check if all the abstract functions are implemented. "

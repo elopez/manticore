@@ -75,7 +75,7 @@ setup(
         "ply",
         "rlp",
         "intervaltree",
-        "crytic-compile>=0.2.2,<0.3.0",
+        "crytic-compile>=0.3.2,<0.4.0",
         "wasm-tob",
         "pyevmasm>=0.2.3",
     ]

@@ -39,7 +39,7 @@ setup(
         f"manticore[native] @ file://{Path(__file__).parent.resolve()}/..",
         f"protobuf~={PB_VER}",
         "grpcio~=1.46",
-        "crytic-compile>=0.2.2",
+        "crytic-compile>=0.3.2,<0.4.0",
     ],
     extras_require={
         "dev": [
