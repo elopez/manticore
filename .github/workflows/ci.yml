@@ -91,8 +91,7 @@ jobs:
         mkdir -p /tmp/boolector
         sudo make DESTDIR=/usr install
         # Install solc unconditionally because it only takes a second or two
-        sudo wget -O /usr/bin/solc https://github.com/ethereum/solidity/releases/download/v0.4.24/solc-static-linux
-        sudo chmod +x /usr/bin/solc
+        solc-select use 0.4.24 --always-install
     - name: Run Tests
       env:
         TEST_TYPE: ${{ matrix.type }}
@@ -135,8 +134,6 @@ jobs:
         run: |
           # just command runner https://github.com/casey/just#pre-built-binaries
           curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "${HOME}/.local/bin"
-          sudo wget -O /usr/bin/solc https://github.com/ethereum/solidity/releases/download/v0.4.24/solc-static-linux
-          sudo chmod +x /usr/bin/solc
 
       - name: 'Lint MUI Server'
         working-directory: server
@@ -149,6 +146,7 @@ jobs:
         working-directory: server
         run: |
           source venv/bin/activate
+          solc-select use 0.4.24 --always-install
           just test
 
   # Send notification when all tests have finished to combine coverage results
