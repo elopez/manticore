@@ -7,6 +7,8 @@ import unittest
 
 import os
 import shutil
+
+import pytest
 from manticore.platforms.evm import EVMWorld
 from manticore.core.smtlib import operators, ConstraintSet
 from manticore.ethereum import ManticoreEVM
@@ -343,6 +345,7 @@ class EthSha3TestSymbolicate(unittest.TestCase):
         self.assertEqual(found, 1)  # log is reachable
         self.assertEqual(m.count_all_states(), 2)
 
+    @pytest.mark.timeout(1200)
     def test_essence2(self):
         source_code = """
         contract I_Choose_Not_To_Run {
