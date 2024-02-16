@@ -13,6 +13,7 @@ jobs:
   # needs to run only on pull_request
   lint:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.8
@@ -40,6 +41,7 @@ jobs:
         mypy
   tests:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -119,6 +121,7 @@ jobs:
 
   manticore-server:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -153,6 +156,7 @@ jobs:
   coverage-finish:
     needs: tests
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
     - name: Coveralls Finished
       uses: coverallsapp/github-action@v2.2.3
@@ -161,6 +165,7 @@ jobs:
         parallel-finished: true
   upload:
     runs-on: ubuntu-20.04
+    timeout-minutes: 60
     if: github.event_name == 'schedule'
     needs: tests
     steps:
