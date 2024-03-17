@@ -244,7 +244,7 @@ If Yices is available, Manticore will use it by default. If not, it will fall ba
 ### Installing CVC4
 For more details go to https://cvc4.github.io/. Otherwise, just get the binary and use it.
 
-        sudo wget -O /usr/bin/cvc4 https://github.com/CVC4/CVC4/releases/download/1.7/cvc4-1.7-x86_64-linux-opt
+        sudo wget -O /usr/bin/cvc4 https://github.com/CVC4/CVC4-archived/releases/download/1.8/cvc4-1.8-x86_64-linux-opt
         sudo chmod +x /usr/bin/cvc4
 
 ### Installing Yices
