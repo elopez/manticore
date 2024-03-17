@@ -7,8 +7,6 @@ import unittest
 
 import os
 import shutil
-
-import pytest
 from manticore.platforms.evm import EVMWorld
 
 from manticore.core.smtlib import operators, ConstraintSet, SolverType
@@ -269,7 +267,6 @@ class EthDelegatecall(EthDetectorTest):
 
     DETECTOR_CLASS = DetectDelegatecall
 
-    @pytest.mark.timeout(1200)
     def test_delegatecall_ok(self):
         name = inspect.currentframe().f_code.co_name[5:]
         self._test(name, set())

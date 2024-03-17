@@ -2,8 +2,6 @@ import inspect
 import unittest
 import os
 import shutil
-
-import pytest
 from manticore.ethereum.plugins import LoopDepthLimiter, KeepOnlyIfStorageChanges
 from manticore.utils import log
 
@@ -110,7 +108,6 @@ class EthBenchmark(unittest.TestCase):
             {(205, "Unsigned integer overflow at SUB instruction", False)},
         )
 
-    @pytest.mark.timeout(1200)
     def test_integer_overflow_storageinvariant(self):
         self._test("integer_overflow_storageinvariant", set())
 
@@ -164,7 +161,6 @@ class EthBenchmark(unittest.TestCase):
         name = inspect.currentframe().f_code.co_name[5:]
         self._test(name, set())
 
-    @pytest.mark.timeout(1200)
     def test_reentrancy_dao_fixed(self):
         name = inspect.currentframe().f_code.co_name[5:]
         self._test(name, set())

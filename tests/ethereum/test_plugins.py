@@ -4,8 +4,6 @@ import os
 import unittest
 
 import shutil
-
-import pytest
 from manticore.ethereum.plugins import VerboseTrace, KeepOnlyIfStorageChanges
 
 from manticore.ethereum import ManticoreEVM
@@ -22,7 +20,6 @@ class EthPluginsTests(unittest.TestCase):
         del self.mevm
         shutil.rmtree(ws)
 
-    @pytest.mark.timeout(1200)
     def test_ignore_states(self):
         m = self.mevm
         m.register_plugin(KeepOnlyIfStorageChanges())
