@@ -148,8 +148,7 @@ def pickle_dump(obj: Any, fp: IO[bytes]) -> None:
     """
     Serializes an object as a gzipped pickle to the given file.
     """
-    pickle.dump(obj, fp, protocol=pickle.HIGHEST_PROTOCOL)
-    fp.flush()
+    return pickle.dump(obj, fp, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def pretty_print_state_descriptors(desc: Dict):
